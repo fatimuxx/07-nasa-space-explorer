@@ -111,6 +111,94 @@ button:hover {
   }
 }
 
+/* Smaller screens: compact layout */
+@media (max-width: 600px) {
+  body {
+    padding: 12px;
+  }
+
+  .site-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 22px 16px;
+  }
+
+  .logo {
+    margin-right: 0;
+    margin-bottom: 15px;
+    width: 110px;
+  }
+
+  .filters {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  input[type="date"],
+  button {
+    width: 100%;
+  }
+
+  .gallery {
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .gallery-item {
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .gallery-item img {
+    height: 180px;
+  }
+
+  .modal-content {
+    margin: 12px;
+    padding: 24px;
+    max-width: 92%;
+  }
+
+  #modalTitle {
+    font-size: 22px;
+  }
+
+  .modal-explanation {
+    font-size: 15px;
+  }
+}
+
+/* Extra small screens: very compact spacing */
+@media (max-width: 420px) {
+  .site-header {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .filters {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  input[type="date"],
+  button {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .gallery-item {
+    padding: 10px;
+  }
+
+  .gallery-item img {
+    height: 160px;
+  }
+
+  .placeholder {
+    padding: 40px 20px;
+  }
+}
+
 /* Gallery flex container */
 .gallery {
   display: flex;
