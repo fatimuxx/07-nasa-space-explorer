@@ -66,7 +66,7 @@ function fetchSpaceImages(startDate, endDate) {
 
   const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${nasaApiKey}&start_date=${startDate}&end_date=${endDate}`;
 
-  gallery.innerHTML = '<p>Loading space images...</p>';
+  gallery.innerHTML = '<p> Loading space images…</p>';
 
   fetch(apiUrl)
     .then((response) => {
