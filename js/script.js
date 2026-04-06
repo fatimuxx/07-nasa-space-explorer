@@ -4,6 +4,17 @@ const endInput = document.getElementById('endDate');
 const gallery = document.getElementById('gallery');
 const fetchButton = document.querySelector('.filters button');
 
+// Get modal elements
+const modal = document.getElementById('imageModal');
+const closeBtn = document.querySelector('.close-btn');
+const modalImage = document.getElementById('modalImage');
+const modalTitle = document.getElementById('modalTitle');
+const modalDate = document.getElementById('modalDate');
+const modalExplanation = document.getElementById('modalExplanation');
+
+// Store image results so we can access them when modal is opened
+let currentImages = [];
+
 // Your NASA API key
 const nasaApiKey = 'tTeLNzNXphJ3ZMlYGtuyTlaYJZFDPVP29gbfKbUT';
 
@@ -18,6 +29,34 @@ fetchButton.addEventListener('click', () => {
   const endDate = endInput.value;
   fetchSpaceImages(startDate, endDate);
 });
+
+// Close modal when user clicks the close button
+closeBtn.addEventListener('click', closeModal);
+
+// Close modal when user clicks outside the modal content
+window.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+
+// Open modal and populate with image data using the index
+function openModal(index) {
+  const imageData = currentImages[index];
+  if (imageData) {
+    modalImage.src = imageData.url;
+    modalImage.alt = imageData.title;
+    modalTitle.textContent = imageData.title;
+    modalDate.textContent = imageData.date;
+    modalExplanation.textContent = imageData.explanation;
+    modal.classList.add('open');
+  }
+}
+
+// Close the modal
+function closeModal() {
+  modal.classList.remove('open');
+}
 
 function fetchSpaceImages(startDate, endDate) {
   if (!startDate || !endDate) {
@@ -57,13 +96,16 @@ function fetchSpaceImages(startDate, endDate) {
         return;
       }
 
+      // Store the images for modal access
+      currentImages = imageResults;
+
       gallery.innerHTML = imageResults
         .map(
-          (item) => `
+          (item, index) => `
             <div class="gallery-item">
-              <img src="${item.url}" alt="${item.title}" />
-              <p><strong>${item.title}</strong> (${item.date})</p>
-              <p>${item.explanation}</p>
+              <img src="${item.url}" alt="${item.title}" onclick="openModal(${index})" />
+              <p><strong>${item.title}</strong></p>
+              <p>${item.date}</p>
             </div>
           `
         )
