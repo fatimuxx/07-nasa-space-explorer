@@ -30,7 +30,20 @@ function fetchSpaceImages(startDate, endDate) {
   gallery.innerHTML = '<p>Loading space images...</p>';
 
   fetch(apiUrl)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        return response.text().then((text) => {
+          throw new Error(`HTTP ${response.status}: ${text}`);
+        });
+      }
+      return response.text().then((text) => {
+        try {
+          return JSON.parse(text);
+        } catch (error) {
+          throw new Error(`Invalid JSON response: ${text.slice(0, 200)}`);
+        }
+      });
+    })
     .then((data) => {
       if (data.error) {
         throw new Error(data.error.message);
@@ -57,6 +70,7 @@ function fetchSpaceImages(startDate, endDate) {
         .join('');
     })
     .catch((error) => {
+      console.error('Fetch error:', error);
       gallery.innerHTML = `<p>Unable to load images. ${error.message}</p>`;
     });
 }
